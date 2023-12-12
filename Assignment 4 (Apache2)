@@ -1,0 +1,19 @@
+---
+- name: Install Apache2 and configure UFW on target1
+  hosts: target1
+  become: yes
+
+  tasks:
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Allow HTTP in UFW
+      ufw:
+        rule: allow
+        port: 80  # HTTP
+
+    - name: Enable UFW
+      ufw:
+        state: enabled
