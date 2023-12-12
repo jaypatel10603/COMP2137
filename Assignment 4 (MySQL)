@@ -1,0 +1,26 @@
+---
+- name: MySQL Installation and Firewall Configuration on Target2
+  hosts: target2
+  become: true
+  tasks:
+    - name: Ensure MySQL Server is Installed
+      apt:
+        pkg: mysql-server
+        state: latest
+
+    - name: Activate UFW Firewall
+      ufw:
+        state: enabled
+        default: deny
+
+    - name: Configure UFW to Allow SSH Connections
+      ufw:
+        rule: allow
+        to_port: 22
+        proto: tcp
+
+    - name: Configure UFW to Allow MySQL Traffic on Port 3306
+      ufw:
+        rule: allow
+        to_port: 3306
+        proto: tcp
